@@ -26,6 +26,12 @@ module.exports = (filedata)=>{
                     load_meters: shipment['Cargoline'][0]['CargolineLoadingMeters'][0],
                     description: shipment['Cargoline'][0]['CargolineDescription'][0],
                     cargo: shipment['Cargoline'][0]['MarksNumbers'][0],
+                    additional:{
+                        status: shipment['ShipmentStatus'][0],
+                        return: shipment['ReturnShipment'][0],
+                        trip_number: shipment['Tripnumber'][0],
+                        route_code: shipment['Routecode'][0]
+                    },
                     activities:{
                         loading: {
                             name: shipment['LoadingName'][0],
@@ -34,11 +40,13 @@ module.exports = (filedata)=>{
                             date: shipment['LoadingDate'][0],
                             time_from: shipment['LoadingTimeFrom'][0],
                             time_till: shipment['LoadingTimeTo'][0],
+                            remarks: shipment['LoadingInstructions'][0],
                             address: {
-                                street: shipment['LoadingAddress'][0],
+                                street: shipment['LoadingAddress'][0].match(/(.*) (.*$)/m) ? shipment['LoadingAddress'][0].match(/(.*) (.*$)/m)[1] : shipment['LoadingAddress'][0],
                                 zip_code: shipment['LoadingZipcode'][0],
                                 city: shipment['LoadingCity'][0],
-                                country: shipment['LoadingCountryCode'][0]
+                                country: shipment['LoadingCountryCode'][0],
+                                house_number: shipment['LoadingAddress'][0].match(/(.*) (.*$)/m) ? shipment['LoadingAddress'][0].match(/(.*) (.*$)/m)[2] : ''
                             }
                         },
                         unloading: {
@@ -48,11 +56,13 @@ module.exports = (filedata)=>{
                             date: shipment['UnloadingDate'][0],
                             time_from: shipment['UnloadingTimeFrom'][0],
                             time_till: shipment['UnloadingTimeTo'][0],
+                            remarks: shipment['UnloadingInstructions'][0],
                             address: {
-                                street: shipment['UnloadingAddress'][0],
+                                street: shipment['UnloadingAddress'][0].match(/(.*) (.*$)/m) ? shipment['UnloadingAddress'][0].match(/(.*) (.*$)/m)[1] : shipment['UnloadingAddress'][0],
                                 zip_code: shipment['UnloadingZipcode'][0],
                                 city: shipment['UnloadingCity'][0],
-                                country: shipment['UnloadingCountryCode'][0]
+                                country: shipment['UnloadingCountryCode'][0],
+                                house_number: shipment['UnloadingAddress'][0].match(/(.*) (.*$)/m) ? shipment['UnloadingAddress'][0].match(/(.*) (.*$)/m)[2] : ''
                             }
                         }
                     }
