@@ -26,12 +26,6 @@ module.exports = (filedata)=>{
                     load_meters: shipment['Cargoline'][0]['CargolineLoadingMeters'][0],
                     description: shipment['Cargoline'][0]['CargolineDescription'][0],
                     cargo: shipment['Cargoline'][0]['MarksNumbers'][0],
-                    additional:{
-                        status: shipment['ShipmentStatus'][0],
-                        return: shipment['ReturnShipment'][0],
-                        trip_number: shipment['Tripnumber'][0],
-                        route_code: shipment['Routecode'][0]
-                    },
                     activities:{
                         loading: {
                             name: shipment['LoadingName'][0],
